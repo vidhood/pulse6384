@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Juicy Hood</title>
+
+<style>
+*{
+box-sizing:border-box;
+margin:0;
+padding:0;
+}
+
+body{
+font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+background:#000;
+display:flex;
+justify-content:center;
+align-items:center;
+min-height:100vh;
+color:#fff;
+}
+
+.container{
+width:100%;
+max-width:420px;
+position:relative;
+padding:10px;
+}
+
+.ad-box{
+width:100%;
+margin:12px 0;
+text-align:center;
+}
+
+video{
+width:100%;
+border-radius:12px;
+background:#000;
+display:none;
+}
+
+.title{
+font-size:16px;
+margin:14px 0;
+text-align:center;
+}
+
+.notice-link{
+display:block;
+margin-top:10px;
+padding:14px;
+font-size:20px;
+font-weight:bold;
+text-align:center;
+color:#00ffcc;
+border:2px solid #00ffcc;
+border-radius:12px;
+text-decoration:none;
+transition:0.3s;
+}
+
+.notice-link:hover{
+background:#00ffcc;
+color:#000;
+}
+
+.loading-box{
+position:absolute;
+top:10px;
+left:10px;
+right:10px;
+height:236px;
+background:#000;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+border-radius:12px;
+z-index:20;
+}
+
+.loading-text{
+margin-bottom:12px;
+font-size:14px;
+}
+
+.progress-bar{
+width:70%;
+height:6px;
+background:#333;
+border-radius:10px;
+overflow:hidden;
+}
+
+.progress{
+width:0%;
+height:100%;
+background:#00ffcc;
+}
+
+.countdown-box{
+position:absolute;
+top:10px;
+left:10px;
+right:10px;
+height:236px;
+display:none;
+justify-content:center;
+align-items:center;
+background:rgba(0,0,0,0.5);
+border-radius:12px;
+z-index:30;
+}
+
+.countdown-text{
+background:rgba(0,0,0,0.9);
+padding:14px 18px;
+border-radius:12px;
+font-size:14px;
+text-align:center;
+position:relative;
+}
+
+.close-btn{
+position:absolute;
+top:6px;
+right:10px;
+cursor:pointer;
+font-size:16px;
+color:#fff;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<!-- IKLAN ATAS -->
+<div class="ad-box">
+<script>
+  atOptions = {
+    'key' : 'faf274c450632e300b15fe4438f61620',
+    'format' : 'iframe',
+    'height' : 50,
+    'width' : 320,
+    'params' : {}
+  };
+</script>
+<script src="https://www.highperformanceformat.com/faf274c450632e300b15fe4438f61620/invoke.js"></script>
+</div>
+
+<!-- VIDEO -->
+<video id="videoPlayer" controls autoplay muted playsinline>
+<source id="videoSource" src="" type="video/mp4">
+</video>
+
+<!-- LOADING -->
+<div class="loading-box" id="loadingBox">
+<div class="loading-text" id="loadingText">Loading video...</div>
+<div class="progress-bar">
+<div class="progress" id="progressBar"></div>
+</div>
+</div>
+
+<!-- IKLAN BAWAH -->
+<div class="ad-box">
+<script>
+  atOptions = {
+    'key' : 'faf274c450632e300b15fe4438f61620',
+    'format' : 'iframe',
+    'height' : 50,
+    'width' : 320,
+    'params' : {}
+  };
+</script>
+<script src="https://www.highperformanceformat.com/faf274c450632e300b15fe4438f61620/invoke.js"></script>
+</div>
+
+<!-- LINK BACKUP -->
+<a href="#" target="_blank" class="notice-link" id="backupLink">
+If the video fails to load, please visit our main website. 🔥
+</a>
+
+<div class="title">
+Watch till the end 😳🔥
+</div>
+
+
+
+</div>
+
+<script>
+
+// ambil parameter ?v=
+const params = new URLSearchParams(window.location.search);
+const videoId = params.get("v");
+
+const video = document.getElementById("videoPlayer");
+const source = document.getElementById("videoSource");
+const backupLink = document.getElementById("backupLink");
+
+if(videoId){
+
+let finalLink = "https://cdn.videy.co/" + videoId + ".mp4";
+
+source.src = finalLink;
+video.load();
+
+backupLink.href = finalLink;
+
+}else{
+
+document.querySelector(".title").innerText = "Video not found";
+backupLink.href = "https://videy.co";
+
+}
+
+// LOADING PALSU
+let progress = 0;
+const progressBar = document.getElementById("progressBar");
+const loadingText = document.getElementById("loadingText");
+
+let loadingInterval = setInterval(() => {
+
+progress += Math.random() * 15;
+
+if(progress >= 100){
+
+progress = 100;
+clearInterval(loadingInterval);
+
+document.getElementById("loadingBox").style.display = "none";
+video.style.display = "block";
+video.play();
+
+}else if(progress > 60){
+
+loadingText.innerText = "Preparing content...";
+
+}
+
+progressBar.style.width = progress + "%";
+
+},300);
+
+
+// IKLAN SEKALI SAJA
+let adShown = false;
+let adClosed = false;
+
+setTimeout(() => {
+
+if(adShown || adClosed) return;
+
+adShown = true;
+
+let countdown = 5;
+const box = document.getElementById("countdownBox");
+const text = document.getElementById("countdownText");
+
+box.style.display = "flex";
+
+text.innerText = "Ad will open in " + countdown + " seconds...";
+
+let interval = setInterval(() => {
+
+countdown--;
+
+if(countdown > 0){
+
+text.innerText = "Ad will open in " + countdown + " seconds...";
+
+}else{
+
+clearInterval(interval);
+
+window.open(
+"https://www.profitablecpmratenetwork.com/z5yj8m7xag?key=e3f189b319196c9f7d8ce3fef9402260",
+"_blank"
+);
+
+box.style.display = "none";
+
+}
+
+},1000);
+
+},20000);
+
+
+// TUTUP IKLAN
+function closeAd(){
+document.getElementById("countdownBox").style.display = "none";
+adClosed = true;
+}
+
+</script>
+
+</body>
+</html>
